@@ -15,6 +15,8 @@ AI Math Lab is a visual, code-first introduction to linear algebra for students 
 
 Requires Node.js 22.13 or newer.
 
+On Windows, double-click `START-AI-MATH-LAB.cmd` to start the local copy and open it in your browser. Keep the terminal window open while using the site, then close it when finished.
+
 ```bash
 npm install
 npm run dev

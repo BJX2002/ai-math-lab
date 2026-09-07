@@ -8,9 +8,9 @@ export function SiteHeader({ dark = false }: { dark?: boolean }) {
         <span>AI Math Lab</span>
       </Link>
       <nav aria-label="Primary navigation">
+        <Link href="/start-here">Start here</Link>
         <Link href="/courses">Course</Link>
         <Link href="/modules/vectors">Code labs</Link>
-        <Link href="/#about">About</Link>
       </nav>
     </header>
   );

@@ -1,12 +1,8 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import "./globals.css";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const requestHeaders = await headers();
-  const host = requestHeaders.get("host") ?? "localhost:3000";
-  const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
-  const base = `${protocol}://${host}`;
+export function generateMetadata(): Metadata {
+  const base = "https://ai-math-lab-foundations.woshisheiwoshifei.chatgpt.site";
   const title = "AI Math Lab — Linear Algebra for AI Beginners";
   const description = "A visual, code-first introduction to the linear algebra behind artificial intelligence.";
   return {

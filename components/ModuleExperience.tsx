@@ -39,19 +39,20 @@ export function ModuleExperience({ module }: { module: CourseModule }) {
   return (
     <>
       <section className="interactive-section" id="practice">
-        <div className="lesson-kicker">INTERACTIVE CHECKPOINT</div>
+        <div className="lesson-kicker">PLAY WITH THE IDEA</div>
         <div className="section-heading inline-heading">
-          <h2>Change the values. Watch the idea respond.</h2>
-          <p>This mini-lab runs in your browser. It is designed to build prediction habits before you move into Python.</p>
+          <h2>Change a number and see what happens.</h2>
+          <p>There is no wrong way to explore this box. Try a value, notice what changes, then try another one.</p>
         </div>
         <InteractiveLab slug={module.slug} />
       </section>
 
       <section className="code-lab-section" id="code-lab">
         <div className="code-lab-copy">
-          <div className="lesson-kicker light">NUMPY CODE LAB</div>
+          <div className="lesson-kicker light">YOUR FIRST LOOK AT PYTHON</div>
           <h2>{module.codeTitle}</h2>
           <p>{module.codeIntro}</p>
+          <p className="code-reassurance"><strong>New to code?</strong> You do not need to write this from memory. Read it from top to bottom and begin by changing just one number.</p>
           <div className="challenge-card"><span>TRY THIS</span><p>{module.challenge}</p></div>
           <details><summary>Show expected insight</summary><p>{module.expected}</p></details>
         </div>
@@ -64,8 +65,8 @@ export function ModuleExperience({ module }: { module: CourseModule }) {
       <section className="quiz-section" id="quiz">
         <div className="section-heading inline-heading">
           <p className="eyebrow dark">KNOWLEDGE CHECK</p>
-          <h2>Can you explain it without the notes?</h2>
-          <p>Choose an answer for each question, then check your reasoning.</p>
+          <h2>Three gentle questions.</h2>
+          <p>This is not an exam. Choose what feels right, check the explanation, and try again whenever you like.</p>
         </div>
         <div className="quiz-list">
           {module.quiz.map((item, questionIndex) => (
@@ -87,7 +88,7 @@ export function ModuleExperience({ module }: { module: CourseModule }) {
       </section>
 
       <section className={`completion-band ${complete ? "is-complete" : ""}`}>
-        <div><span>{complete ? "MODULE COMPLETE" : "READY TO MOVE ON?"}</span><h2>{complete ? "Nicely done. Your progress is saved on this device." : "Mark this module complete when you can explain the key idea."}</h2></div>
+        <div><span>{complete ? "MODULE COMPLETE" : "READY TO MOVE ON?"}</span><h2>{complete ? "Nicely done. Your progress is saved on this device." : "Mark this module complete when the main picture feels familiar."}</h2></div>
         <button onClick={toggleComplete}>{complete ? "Undo completion" : "Mark complete ✓"}</button>
       </section>
     </>

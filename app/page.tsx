@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
@@ -11,30 +12,46 @@ export default function Home() {
       <section className="hero" id="top">
         <div className="hero-grid" aria-hidden="true" />
         <div className="hero-copy">
-          <p className="eyebrow">LINEAR ALGEBRA FOR AI BEGINNERS</p>
-          <h1>See the maths.<br /><span>Make it work.</span></h1>
-          <p className="hero-intro">Build the visual intuition and coding confidence to understand vectors, matrices, neural networks, and the mathematics behind AI.</p>
+          <p className="eyebrow">A ZERO-MATH STARTING POINT</p>
+          <h1>New to all of this?<br /><span>Start here.</span></h1>
+          <p className="hero-intro">Never studied linear algebra or neural networks? That is completely fine. We begin with pictures and everyday ideas, then add one small piece of maths at a time.</p>
           <div className="hero-actions">
-            <Link className="button button-primary" href="/modules/vectors">Start with vectors <span aria-hidden="true">→</span></Link>
+            <a className="button button-primary" href="#how-ai-works">Teach me like I’m new <span aria-hidden="true">↓</span></a>
             <Link className="button button-secondary" href="/courses">Explore the course</Link>
           </div>
           <ul className="quick-facts" aria-label="Course features">
-            <li><span>✓</span> No prerequisites</li>
-            <li><span>✓</span> Six guided modules</li>
-            <li><span>✓</span> NumPy practice</li>
+            <li><span>✓</span> No maths assumed</li>
+            <li><span>✓</span> Pictures before symbols</li>
+            <li><span>✓</span> Try everything yourself</li>
           </ul>
         </div>
 
-        <div className="concept-panel" aria-label="Example vector code lab">
-          <div className="panel-bar"><span>CODE LAB · 01</span><span className="status-dot">READY</span></div>
-          <div className="concept-visual" aria-hidden="true">
-            <div className="vector-card vector-x"><small>input x</small><strong>[0.5, 1.0, −0.5]</strong><em>shape (3,)</em></div>
-            <div className="operator">·</div>
-            <div className="vector-card vector-w"><small>weights w</small><strong>[0.2, 0.8, −0.4]</strong><em>shape (3,)</em></div>
+        <div className="concept-panel beginner-panel" id="how-ai-works" aria-label="A simple picture of how a neural network makes a guess">
+          <div className="panel-bar"><span>AI IN ONE PICTURE</span><span className="status-dot">NO MATHS YET</span></div>
+          <div className="beginner-network">
+            <div className="clue-stack">
+              <span><b>🎨</b><small>colour</small><strong>red</strong></span>
+              <span><b>⚖️</b><small>weight</small><strong>150 g</strong></span>
+              <span><b>●</b><small>shape</small><strong>round</strong></span>
+            </div>
+            <div className="flow-arrow" aria-hidden="true">→</div>
+            <div className="tiny-network" aria-label="Three layers of connected artificial neurons">
+              <div>{[1,2,3].map((node) => <i key={node} />)}</div>
+              <span aria-hidden="true">→</span>
+              <div>{[1,2].map((node) => <i key={node} />)}</div>
+              <span aria-hidden="true">→</span>
+              <div><i /></div>
+            </div>
+            <div className="flow-arrow" aria-hidden="true">→</div>
+            <div className="guess-card"><small>computer’s guess</small><strong>🍎 Apple</strong><em>92% sure</em></div>
           </div>
-          <pre className="code-preview"><code><span className="code-keyword">import</span> numpy <span className="code-keyword">as</span> np{"\n\n"}z = np.dot(w, x) + b{"\n"}<span className="code-comment"># predict before you run it</span>{"\n"}<span className="code-function">print</span>(z)</code></pre>
-          <div className="result-row"><span>OUTPUT</span><strong>1.20</strong><span className="result-note">Now change one weight.</span></div>
+          <div className="picture-steps"><span><b>1</b> Look at clues</span><span><b>2</b> Mix the clues</span><span><b>3</b> Make a guess</span></div>
         </div>
+      </section>
+
+      <section className="home-primer">
+        <figure><Image src="/neural-network-beginner.png" alt="An apple, scale, and colour clues entering a simple neural network and producing a checked prediction" width={1536} height={1024} /></figure>
+        <div><p className="eyebrow dark">BRAND NEW? BEGIN BEFORE MODULE 01</p><h2>First, see what a neural network is doing.</h2><p>No equations. No code. Just one friendly, picture-led lesson about data, neurons, guesses, and how learning happens.</p><Link className="button button-dark" href="/start-here">Take the 15-minute introduction →</Link></div>
       </section>
 
       <section className="pathway" id="pathway">
@@ -65,7 +82,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="about-band"><p>Learn visually · verify with code · explore at your own pace</p><Link href="/modules/vectors">Begin module 01 →</Link></section>
+      <section className="about-band"><p>Learn visually · verify with code · explore at your own pace</p><Link href="/start-here">Begin at zero →</Link></section>
       <SiteFooter />
     </main>
   );

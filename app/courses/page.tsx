@@ -16,12 +16,17 @@ export default function CoursesPage() {
       <div className="inner-dark"><SiteHeader dark />
         <section className="course-hero">
           <p className="eyebrow">THE LEARNING PATH</p>
-          <h1>Six ideas that make AI mathematics less mysterious.</h1>
-          <p>Start at module 01 if this is new. If you already know the basics, use the AI connection and code lab in each module as a bridge to deeper study.</p>
+          <h1>Start from zero. Build one idea at a time.</h1>
+          <p>You do not need to know any linear algebra or neural networks. Begin with our picture-led introduction, then move through six small steps at your own pace.</p>
           <div className="course-facts"><span><b>06</b> modules</span><span><b>4.5h</b> guided study</span><span><b>18</b> quiz questions</span><span><b>06</b> interactive labs</span></div>
         </section>
       </div>
       <section className="course-list-section">
+        <Link className="primer-row" href="/start-here">
+          <span className="course-row-number">00</span>
+          <div><p>NEW TO EVERYTHING?</p><h2>Start here: what does AI actually do?</h2><small>Meet data, neurons, predictions, and training through pictures—before any linear algebra.</small></div>
+          <span>15 MIN · BEGINNER</span><b>BEGIN →</b>
+        </Link>
         <ProgressOverview />
         <div className="course-list">
           {courseModules.map((module, index) => (
