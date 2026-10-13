@@ -14,6 +14,9 @@
 # testing
 /coverage
 
+# generated
+*.tsbuildinfo
+
 # next.js
 /.next/
 /.vinext/

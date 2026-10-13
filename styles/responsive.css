@@ -1,0 +1,63 @@
+/* All breakpoints. Must load last so overrides win.
+   Split out of the original app/globals.css; content unchanged. */
+
+@media (max-width: 1000px) {
+  .hero { min-height: auto; grid-template-columns: 1fr; gap: 60px; }.concept-panel { width: min(100%, 620px); }
+  .home-primer { grid-template-columns: 1fr; gap: 45px; }.home-primer figure { max-width: 700px; }
+  .module-grid { grid-template-columns: repeat(2, 1fr); }.method-section { grid-template-columns: 1fr; gap: 50px; }.method-intro { max-width: 650px; }
+  .course-hero, .course-list-section, .lesson-hero, .plain-idea-section, .outcomes-section, .lesson-content, .quiz-section, .module-pagination, .beginner-hero, .one-sentence-section, .network-section { margin-left: 24px; margin-right: 24px; }
+  .course-row { grid-template-columns: 60px 1fr 110px; }.course-row-arrow { display: none; }
+  .lesson-title-row { grid-template-columns: 110px 1fr; }.lesson-ai-link { margin-left: 160px; }
+  .plain-idea-section { grid-template-columns: 1fr; }.lesson-illustration { max-width: 760px; }
+  .code-lab-section { grid-template-columns: 1fr; }.full-code-panel { max-width: 760px; }
+  .beginner-hero { grid-template-columns: 1fr; gap: 50px; }.safe-start-card { max-width: 620px; }.one-sentence-section { grid-template-columns: 1fr; }.neural-art-card { max-width: 760px; }.word-grid { grid-template-columns: repeat(3, 1fr); }.neuron-section, .math-map-section { grid-template-columns: 1fr; }.one-neuron-picture { max-width: 760px; }.training-loop { grid-template-columns: 1fr 1fr; }
+  /* The plane needs the full width before the readouts move underneath it. */
+  .plane-lab { grid-template-columns: 1fr; gap: 20px; }
+}
+
+@media (max-width: 700px) {
+  .site-header { width: calc(100% - 32px); min-height: 70px; }.site-header nav { gap: 16px; font-size: 12px; }.site-header nav a:last-child { display: none; }
+  .hero { padding: 125px 20px 70px; }.hero h1 { font-size: clamp(48px, 15vw, 70px); }.hero-intro { font-size: 16px; }.quick-facts { display: grid; gap: 10px; }
+  .beginner-network { grid-template-columns: 1fr; }.flow-arrow { text-align: center; transform: rotate(90deg); }.tiny-network { width: 190px; margin: 0 auto; }.guess-card { min-height: 95px; text-align: center; }.picture-steps { padding: 16px; grid-template-columns: 1fr; text-align: left; }
+  .home-primer { padding: 70px 20px; }
+  .pathway { padding: 75px 20px; }.module-grid { grid-template-columns: 1fr; }.module-card { min-height: 180px; }
+  .method-section { padding: 75px 20px; }.method-steps { grid-template-columns: 1fr; }.method-steps article { min-height: 175px; }.about-band { padding: 30px 20px; align-items: flex-start; flex-direction: column; }
+  .site-footer { padding: 48px 20px; grid-template-columns: 1fr; gap: 35px; }
+  .course-hero { padding: 70px 0 55px; }.course-hero h1 { font-size: 50px; }.course-facts { grid-template-columns: 1fr 1fr; }.primer-row { padding: 24px 20px; grid-template-columns: 42px 1fr; }.primer-row > span:nth-last-child(2), .primer-row > b { display: none; }.progress-card { grid-template-columns: 1fr auto; }.progress-track { grid-row: 2; grid-column: 1/-1; }.course-row { padding: 25px 5px; grid-template-columns: 42px 1fr; }.course-row-meta { display: none; }.course-row-main h2 { font-size: 22px; }
+  .lesson-hero { padding-bottom: 50px; }.lesson-title-row { grid-template-columns: 1fr; gap: 30px; }.lesson-number { font-size: 72px; }.lesson-title-row h1 { font-size: 49px; }.lesson-ai-link { margin: 45px 0 0; grid-template-columns: 1fr; }.lesson-nav { overflow-x: auto; gap: 22px; }.lesson-nav span { display: none; }
+  .plain-idea-section { padding: 65px 0; }.illustration-stage { min-height: 260px; padding: 20px; }.vector-picture, .matrix-picture { grid-template-columns: 1fr; }.vector-picture .picture-arrow, .matrix-picture .picture-arrow { text-align: center; transform: rotate(90deg); }.thing-card { max-width: 180px; margin: auto; }.feature-list { width: 100%; }.vector-bracket { justify-content: center; }.matrix-picture > div, .machine-box { width: 180px; margin: auto; }.dot-row { grid-template-columns: 1fr auto 1fr; }.dot-row em { grid-column: 1/-1; text-align: right; }
+  .outcomes-section { padding: 65px 0; grid-template-columns: 1fr; gap: 35px; }.outcomes-section ul { grid-template-columns: 1fr; }.lesson-block { padding: 55px 0; grid-template-columns: 1fr; gap: 22px; }.lesson-block-index { grid-template-columns: auto 1fr; align-items: center; }
+  .interactive-section { padding: 70px 20px; }.mini-lab-grid { grid-template-columns: 1fr; padding: 20px; }.lab-wide { grid-column: auto; align-items: flex-start; flex-direction: column; }.lab-wide code { text-align: left; overflow-wrap: anywhere; }.shape-lab { align-items: stretch; flex-direction: column; }.shape-operator { align-self: center; }.coefficient-row { grid-template-columns: repeat(3, 1fr); }.system-result { align-items: flex-start; flex-direction: column; gap: 12px; }
+  .code-lab-section { padding: 70px 20px; }.code-lab-copy h2 { font-size: 38px; }.full-code-panel pre { padding: 20px; font-size: 12px; }
+  .quiz-section { padding: 70px 0; }.quiz-card { padding: 20px; }.completion-band { align-items: flex-start; flex-direction: column; }.module-pagination { padding: 45px 0; }
+  .beginner-dark { padding-top: 70px; }.beginner-hero { padding: 65px 0; }.beginner-hero h1 { font-size: 52px; }.one-sentence-section { padding: 75px 0; }.neural-art-card figcaption { grid-template-columns: 1fr; text-align: left; }.word-section, .neuron-section, .training-section, .math-map-section { padding: 75px 20px; }.word-grid { grid-template-columns: 1fr; }.word-grid article { min-height: 190px; }.word-grid p { min-height: auto; }.one-neuron-picture { min-height: 520px; padding: 28px; grid-template-columns: 1fr 42px 90px; }.neuron-output { grid-column: 1/-1; justify-content: center; }.layer-picture { padding: 30px 15px; grid-template-columns: 1fr; gap: 18px; }.layer-picture > b { text-align: center; transform: rotate(90deg); }.layer { min-height: 210px; }.training-loop { grid-template-columns: 1fr; }.training-loop article { min-height: 190px; }.math-map { grid-template-columns: 1fr; }
+  .plane-lab { padding: 18px; box-shadow: 8px 8px 0 #d8f7f1; }.plane-controls .lab-readout strong { font-size: 17px; }
+}
+
+/*
+ * Phones. The 700px block above handles tablets and landscape phones; at 360px
+ * the figures would still sit in two columns, the marking tables would overflow,
+ * and the drop shadow would eat a tenth of the screen.
+ */
+@media (max-width: 460px) {
+  .plane-lab { grid-template-columns: 1fr; padding: 14px; gap: 14px; box-shadow: 4px 4px 0 #d8f7f1; }
+  .plane-lab > * { min-width: 0; }
+  .plane { width: 100%; height: auto; }
+  .plane-controls { gap: 10px; }
+  .plane-controls .lab-readout strong { font-size: 16px; }
+  .plane-hint { font-size: 13px; }
+  .plane-slider input[type="range"] { width: 100%; }
+  .value-input input { padding: 9px; font-size: 13px; }
+
+  /* A four-column marking table cannot fit; let it scroll instead of squashing. */
+  .marks-table { display: block; overflow-x: auto; white-space: normal; }
+  .marks-table th, .marks-table td { padding: 8px 10px; }
+
+  .guide-grid, .lens-grid, .case-list, .heatmap-pair, .spectrum { grid-template-columns: 1fr; }
+  .spectrum { padding: 16px 12px 26px; gap: 6px; }
+  .topic-formula { margin: 14px -8px; }
+  .exam-item > *:not(summary) { margin: 12px; }
+  .plain-list { padding-left: 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; } }

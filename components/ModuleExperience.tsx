@@ -1,95 +1,138 @@
 "use client";
 
 import { useState } from "react";
-import type { CourseModule } from "../lib/course-data";
-import { InteractiveLab } from "./InteractiveLab";
+import { useProgress } from "../hooks/useProgress";
+import type { ModuleExperienceView } from "../lib/content/view";
+import type { Locale } from "../lib/i18n/locales";
+import { getMessages } from "../lib/i18n/messages";
+import { LabView } from "./lesson/labs";
+import { PyCell } from "./py/PyCell";
 
-const STORAGE_KEY = "ai-math-lab-progress";
+export function ModuleExperience({  view,
+  locale,
+}: {
+  view: ModuleExperienceView;
+  locale: Locale;
+}) {
+  const t = getMessages(locale);
+  const { progress, isModuleComplete, setModuleComplete } = useProgress();
 
-export function ModuleExperience({ module }: { module: CourseModule }) {
-  const [answers, setAnswers] = useState<(number | null)[]>(module.quiz.map(() => null));
+  const [answers, setAnswers] = useState<(number | null)[]>(() => view.quiz.map(() => null));
   const [checked, setChecked] = useState(false);
-  const [complete, setComplete] = useState(() => {
-    if (typeof window === "undefined") return false;
-    try {
-      const completed: string[] = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "[]");
-      return completed.includes(module.slug);
-    } catch {
-      return false;
-    }
-  });
-  const [copied, setCopied] = useState(false);
 
-  const score = answers.reduce<number>((total, answer, index) => total + (answer === module.quiz[index].correct ? 1 : 0), 0);
+  // Storage is only read after hydration, so server and first client render agree.
+  const hydrated = progress !== null;
+  const complete = hydrated && isModuleComplete(view.slug);
+
+  const score = answers.reduce<number>(
+    (total, answer, index) => total + (answer === view.quiz[index].correct ? 1 : 0),
+    0,
+  );
 
   function toggleComplete() {
-    let completed: string[] = [];
-    try { completed = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "[]"); } catch { completed = []; }
-    completed = complete ? completed.filter((slug) => slug !== module.slug) : Array.from(new Set([...completed, module.slug]));
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(completed));
-    setComplete(!complete);
-  }
-
-  async function copyCode() {
-    await navigator.clipboard.writeText(module.code);
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 1500);
+    setModuleComplete(view.slug, !complete);
   }
 
   return (
     <>
       <section className="interactive-section" id="practice">
-        <div className="lesson-kicker">PLAY WITH THE IDEA</div>
+        <div className="lesson-kicker">{t.module.practiceKicker}</div>
         <div className="section-heading inline-heading">
-          <h2>Change a number and see what happens.</h2>
-          <p>There is no wrong way to explore this box. Try a value, notice what changes, then try another one.</p>
+          <h2>{t.module.practiceTitle}</h2>
+          <p>{t.module.practiceBody}</p>
         </div>
-        <InteractiveLab slug={module.slug} />
+        <LabView id={view.lab} locale={locale} />
       </section>
 
       <section className="code-lab-section" id="code-lab">
         <div className="code-lab-copy">
-          <div className="lesson-kicker light">YOUR FIRST LOOK AT PYTHON</div>
-          <h2>{module.codeTitle}</h2>
-          <p>{module.codeIntro}</p>
-          <p className="code-reassurance"><strong>New to code?</strong> You do not need to write this from memory. Read it from top to bottom and begin by changing just one number.</p>
-          <div className="challenge-card"><span>TRY THIS</span><p>{module.challenge}</p></div>
-          <details><summary>Show expected insight</summary><p>{module.expected}</p></details>
+          <div className="lesson-kicker light">{t.module.codeKicker}</div>
+          <h2>{view.code.title}</h2>
+          <p>{view.code.intro}</p>
+          <p className="code-reassurance">
+            <strong>{t.module.codeReassuranceLead}</strong> {t.module.codeReassuranceBody}
+          </p>
+          <div className="challenge-card">
+            <span>{t.module.tryThis}</span>
+            <p>{view.code.challenge}</p>
+          </div>
         </div>
-        <div className="full-code-panel">
-          <div className="panel-bar"><span>module_{module.number}.py</span><button onClick={copyCode}>{copied ? "COPIED" : "COPY CODE"}</button></div>
-          <pre><code>{module.code}</code></pre>
-        </div>
+        <PyCell
+          locale={locale}
+          fileName={view.code.id}
+          source={view.code.source}
+          expectedOutput={view.code.expectedOutput}
+          expectedNote={view.code.expectedNote}
+        />
       </section>
 
       <section className="quiz-section" id="quiz">
         <div className="section-heading inline-heading">
-          <p className="eyebrow dark">KNOWLEDGE CHECK</p>
-          <h2>Three gentle questions.</h2>
-          <p>This is not an exam. Choose what feels right, check the explanation, and try again whenever you like.</p>
+          <p className="eyebrow dark">{t.module.quizEyebrow}</p>
+          <h2>{t.module.quizTitle}</h2>
+          <p>{t.module.quizBody}</p>
         </div>
         <div className="quiz-list">
-          {module.quiz.map((item, questionIndex) => (
+          {view.quiz.map((item, questionIndex) => (
             <fieldset key={item.question} className="quiz-card">
-              <legend><span>0{questionIndex + 1}</span>{item.question}</legend>
+              <legend>
+                <span>{String(questionIndex + 1).padStart(2, "0")}</span>
+                {item.question}
+              </legend>
               {item.options.map((option, optionIndex) => {
                 const chosen = answers[questionIndex] === optionIndex;
-                const state = checked ? (optionIndex === item.correct ? "correct" : chosen ? "incorrect" : "") : "";
-                return <label className={state} key={option}><input type="radio" name={`question-${questionIndex}`} checked={chosen} onChange={() => { const next = [...answers]; next[questionIndex] = optionIndex; setAnswers(next); setChecked(false); }} /><span>{option}</span></label>;
+                const state = checked
+                  ? optionIndex === item.correct
+                    ? "correct"
+                    : chosen
+                      ? "incorrect"
+                      : ""
+                  : "";
+                return (
+                  <label className={state} key={option}>
+                    <input
+                      type="radio"
+                      name={`${view.slug}-question-${questionIndex}`}
+                      checked={chosen}
+                      onChange={() => {
+                        const next = [...answers];
+                        next[questionIndex] = optionIndex;
+                        setAnswers(next);
+                        setChecked(false);
+                      }}
+                    />
+                    <span>{option}</span>
+                  </label>
+                );
               })}
-              {checked && <p className="quiz-explanation">{item.explanation}</p>}
+              {checked ? <p className="quiz-explanation">{item.explanation}</p> : null}
             </fieldset>
           ))}
         </div>
         <div className="quiz-actions">
-          <button className="button button-primary" onClick={() => setChecked(true)} disabled={answers.some((answer) => answer === null)}>Check answers</button>
-          {checked && <strong>{score} / {module.quiz.length} correct</strong>}
+          <button
+            className="button button-primary"
+            onClick={() => setChecked(true)}
+            disabled={answers.some((answer) => answer === null)}
+          >
+            {t.module.checkAnswers}
+          </button>
+          {checked ? (
+            <strong aria-live="polite">
+              {score} / {view.quiz.length} {t.module.correctCount}
+            </strong>
+          ) : null}
         </div>
       </section>
 
       <section className={`completion-band ${complete ? "is-complete" : ""}`}>
-        <div><span>{complete ? "MODULE COMPLETE" : "READY TO MOVE ON?"}</span><h2>{complete ? "Nicely done. Your progress is saved on this device." : "Mark this module complete when the main picture feels familiar."}</h2></div>
-        <button onClick={toggleComplete}>{complete ? "Undo completion" : "Mark complete ✓"}</button>
+        <div>
+          <span>{complete ? t.module.completionDone : t.module.completionReady}</span>
+          <h2>{complete ? t.module.completionDoneBody : t.module.completionReadyBody}</h2>
+        </div>
+        <button onClick={toggleComplete} disabled={!hydrated}>
+          {complete ? t.module.undoComplete : t.module.markComplete}
+        </button>
       </section>
     </>
   );

@@ -1,0 +1,114 @@
+/* Design tokens, reset, and base element styles.
+   Split out of the original app/globals.css. */
+
+:root {
+  --ink: #111827;
+  --ink-2: #1a2538;
+  --paper: #f7f4ed;
+  --white: #ffffff;
+  --muted: #667085;
+  --line: #d8d9d3;
+  --aqua: #51e2cf;
+  /* Darkened from #0b8077: the previous value reached only 4.38:1 on --paper. */
+  --aqua-dark: #0a7570;
+  --violet: #a88cf7;
+  --coral: #ff7f73;
+  --yellow: #f2d96b;
+  --max: 1180px;
+
+  /* Callout tones, one per `CalloutTone` in lib/content/types.ts. */
+  --tone-analogy-bg: #f0ecfb;
+  --tone-analogy-line: #6651b5;
+  --tone-takeaway-bg: #edf8f5;
+  --tone-takeaway-line: #0a7570;
+  --tone-warning-bg: #fff4e8;
+  --tone-warning-line: #a8580a;
+  --tone-tip-bg: #fffaf0;
+  --tone-tip-line: #8b6d00;
+
+  /* Verdict colours: both pass 4.5:1 on their own tinted background. */
+  --verdict-ok: #1c7a5e;
+  --verdict-bad: #a3231b;
+
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --font-math: "Cambria Math", "STIX Two Math", "Latin Modern Math", var(--font-mono);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+/*
+ * System font stack, with CJK families named explicitly.
+ *
+ * The previous stack asked for `Inter` first, but the font was never loaded and
+ * web fonts are not fetched from Google Fonts here (slow or unreachable for part
+ * of the audience, and a privacy question). Naming the CJK families explicitly
+ * matters because `ui-sans-serif` alone hands Chinese text to whatever the
+ * platform picks.
+ *
+ * To introduce a self-hosted face later, vendor the woff2 under `public/fonts/`
+ * and prepend its @font-face family here.
+ */
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--paper);
+  font-family:
+    ui-sans-serif,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    "PingFang SC",
+    "Hiragino Sans GB",
+    "Microsoft YaHei",
+    "Noto Sans SC",
+    "Source Han Sans SC",
+    sans-serif;
+}
+
+a { color: inherit; text-decoration: none; }
+button, input { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+
+/*
+ * Code must not wrap: `pre-wrap` broke the indentation that Python depends on.
+ * Code panels already scroll horizontally.
+ */
+pre { white-space: pre; overflow-x: auto; }
+
+/* Consistent keyboard focus. Visible for keyboard users, quiet for pointers. */
+:focus-visible { outline: 3px solid var(--aqua-dark); outline-offset: 2px; }
+.site-header :focus-visible,
+.code-lab-section :focus-visible,
+.completion-band :focus-visible { outline-color: var(--aqua); }
+
+/* Available to screen readers, not rendered. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  z-index: 50;
+  top: 0;
+  left: 50%;
+  padding: 12px 20px;
+  color: var(--ink);
+  background: var(--aqua);
+  font-weight: 850;
+  transform: translate(-50%, -120%);
+}
+.skip-link:focus-visible { transform: translate(-50%, 0); }
+
+/* MathML rendered on the server needs no KaTeX CSS, only a math font stack. */
+.formula math { font-family: var(--font-math); }
